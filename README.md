@@ -75,17 +75,17 @@ To create a Packer configuration file that builds a Debian VM with support for `
 
 # Key sections explained:
 1. Variables: 
-  Define variables for VM name, ISO URL, checksum, and SSH credentials for use throughout the configuration.
+   - Define variables for VM name, ISO URL, checksum, and SSH credentials for use throughout the configuration.
 2. Builders: 
-  The `vmware-iso` builder is used to create a VMware-compatible VM from the Debian ISO.
-  `guest_os_type`: For Debian, use `debian10-64` or another appropriate version.
-  Basic hardware settings like disk size, memory, and CPU are set here.
+   - The `vmware-iso` builder is used to create a VMware-compatible VM from the Debian ISO.
+   - `guest_os_type`: For Debian, use `debian10-64` or another appropriate version.
+   - Basic hardware settings like disk size, memory, and CPU are set here.
 3. Provisioners:
-  Install `cloud-init` and `open-vm-tools` to ensure the VM can integrate with cloud environments (like VMware Cloud Director).
-  Clean and initialize `cloud-init` to prepare the VM for use as a template in VCD.
+   - Install `cloud-init` and `open-vm-tools` to ensure the VM can integrate with cloud environments (like VMware Cloud Director).
+   - Clean and initialize `cloud-init` to prepare the VM for use as a template in VCD.
 4. Post-processors:
-  The post-processor will upload the created VM to vSphere and convert it into a template ready for use in VMware Cloud Director.
-  Update the `cluster`, `datastore`, `host`, `username`, `password`, etc., with your vSphere environment details.
+   - The post-processor will upload the created VM to vSphere and convert it into a template ready for use in VMware Cloud Director.
+   - Update the `cluster`, `datastore`, `host`, `username`, `password`, etc., with your vSphere environment details.
 
 # Next Steps:
 1. Install Packer on your local machine.
