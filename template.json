@@ -1,0 +1,68 @@
+{
+  "variables": {
+    "vm_name": "debian-cloud-init",
+    "iso_url": "http://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.7.0-amd64-netinst.iso",
+    "iso_checksum": "sha256:cb543ff8f936384479e17ffb22be99f42e2b6a4413b2f69e0136b3354d7d1ac1",
+    "ssh_username": "packer",
+    "ssh_password": "packer"
+  },
+  "builders": [
+    {
+      "type": "vmware-iso",
+      "vm_name": "{{user `vm_name`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "sha256",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_wait_timeout": "20m",
+      "shutdown_command": "echo '{{user `ssh_password`}}' | sudo -S shutdown -P now",
+      "tools_upload_flavor": "linux",
+      "disk_size": 10000,
+      "guest_os_type": "debian10-64",
+      "headless": false,
+      "http_directory": "http",
+      "http_port_min": 8000,
+      "http_port_max": 9000,
+      "vmx_data": {
+        "memsize": "1024",
+        "numvcpus": "1",
+        "scsi0.virtualDev": "lsilogic"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get update",
+        "sudo apt-get install -y cloud-init open-vm-tools",
+        "sudo bash -c 'echo "datasource_list: [ NoCloud, VMware, OVF ]" > /etc/cloud/cloud.cfg.d/99-vmware.cfg'",
+        "sudo systemctl enable cloud-init"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo cloud-init clean",
+        "sudo cloud-init init",
+        "sudo cloud-init status"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vsphere",
+      "cluster": "your-cluster",
+      "host": "your-host",
+      "datastore": "your-datastore",
+      "username": "your-username",
+      "password": "your-password",
+      "insecure_connection": true,
+      "vm_name": "{{user `vm_name`}}",
+      "folder": "your-folder",
+      "resource_pool": "your-resource-pool",
+      "convert_to_template": true
+    }
+  ]
+}
