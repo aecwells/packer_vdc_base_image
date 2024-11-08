@@ -73,7 +73,7 @@ To create a Packer configuration file that builds a Debian VM with support for `
 }
 ```
 
-# Key sections explained:
+## Key sections explained:
 1. Variables: 
    - Define variables for VM name, ISO URL, checksum, and SSH credentials for use throughout the configuration.
 2. Builders: 
@@ -87,7 +87,7 @@ To create a Packer configuration file that builds a Debian VM with support for `
    - The post-processor will upload the created VM to vSphere and convert it into a template ready for use in VMware Cloud Director.
    - Update the `cluster`, `datastore`, `host`, `username`, `password`, etc., with your vSphere environment details.
 
-# Next Steps:
+## Next Steps:
 1. Install Packer on your local machine.
 2. Run the Packer template with packer build <template.json>.
 3. Once the VM is built and uploaded to your vSphere environment, it will be available as a template for deployment in VMware Cloud Director.
