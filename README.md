@@ -1,4 +1,4 @@
-# packer_vdc_base_image
+# Packer Project for generating VMware Cloud Director Base Image templates with Cloud-Init support
 
 To create a Packer configuration file that builds a Debian VM with support for `cloud-init` for use in VMware Cloud Director (VCD), follow this example. The Packer configuration will use the `vmware-iso` builder to create a VMware-compatible virtual machine.
 
